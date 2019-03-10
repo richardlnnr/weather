@@ -2,5 +2,139 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {}
+  "projects": {
+    "weather-now": {
+      "root": "projects/weather-now/",
+      "sourceRoot": "projects/weather-now/src",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/weather-now",
+            "index": "projects/weather-now/src/index.html",
+            "main": "projects/weather-now/src/main.ts",
+            "polyfills": "projects/weather-now/src/polyfills.ts",
+            "tsConfig": "projects/weather-now/tsconfig.app.json",
+            "assets": [
+              "projects/weather-now/src/favicon.ico",
+              "projects/weather-now/src/assets"
+            ],
+            "styles": [
+              "projects/weather-now/src/styles.scss"
+            ],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/weather-now/src/environments/environment.ts",
+                  "with": "projects/weather-now/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "weather-now:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "weather-now:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "weather-now:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/weather-now/src/test.ts",
+            "polyfills": "projects/weather-now/src/polyfills.ts",
+            "tsConfig": "projects/weather-now/tsconfig.spec.json",
+            "karmaConfig": "projects/weather-now/karma.conf.js",
+            "styles": [
+              "projects/weather-now/src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "projects/weather-now/src/favicon.ico",
+              "projects/weather-now/src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/weather-now/tsconfig.app.json",
+              "projects/weather-now/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "weather-now-e2e": {
+      "root": "projects/weather-now-e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/weather-now-e2e/protractor.conf.js",
+            "devServerTarget": "weather-now:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "weather-now:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "projects/weather-now-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "weather-now"
 }
