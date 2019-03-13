@@ -1,7 +1,6 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../dist/weather-lib/ngx-domain",
-  "deleteDestPath": false,
+  "dest": "../../../dist/weather-lib/ngx-api",
   "lib": {
     "entryFile": "src/public_api.ts"
   }

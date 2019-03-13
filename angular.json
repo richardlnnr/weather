@@ -161,6 +161,41 @@
           }
         }
       }
+    },
+    "@weather-lib/ngx-api": {
+      "root": "projects/weather-lib/ngx-api",
+      "sourceRoot": "projects/weather-lib/ngx-api/src",
+      "projectType": "library",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/weather-lib/ngx-api/tsconfig.lib.json",
+            "project": "projects/weather-lib/ngx-api/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/weather-lib/ngx-api/src/test.ts",
+            "tsConfig": "projects/weather-lib/ngx-api/tsconfig.spec.json",
+            "karmaConfig": "projects/weather-lib/ngx-api/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/weather-lib/ngx-api/tsconfig.lib.json",
+              "projects/weather-lib/ngx-api/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "weather-now"
