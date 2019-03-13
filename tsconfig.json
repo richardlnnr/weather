@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@weather-lib/ngx-domain": [
+        "dist/weather-lib/ngx-domain"
+      ],
+      "@weather-lib/ngx-domain/*": [
+        "dist/weather-lib/ngx-domain/*"
+      ]
+    }
   }
 }
