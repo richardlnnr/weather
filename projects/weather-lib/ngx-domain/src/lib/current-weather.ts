@@ -1,10 +1,8 @@
-import { MainOptions, MainFactory } from './weather/main';
-import { CoordOptions, CoordFactory } from './weather/coord';
-import { WeatherOptions, WeatherFactory } from './weather/weather';
-import { WindOptions, WindFactory } from './weather/wind';
-import { CloudsOptions, CloudsFactory } from './weather/clouds';
-import { SysOptions } from './weather/sys';
 import { populate, arrayPopulate } from './base-functions';
+import {
+    CoordOptions, WeatherOptions, MainOptions, WindOptions, CloudsOptions,
+    SysOptions, CoordFactory, WeatherFactory, MainFactory, WindFactory, CloudsFactory
+} from './weather';
 
 export interface CurrentWeatherOptions {
     id: number;
