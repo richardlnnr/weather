@@ -6,8 +6,8 @@ export interface MainOptions {
     humidity: number;
     tempMin: number;
     tempMax: number;
-    seaLevel: number;
-    grndLevel: number;
+    seaLevel?: number;
+    grndLevel?: number;
 }
 
 class Main implements MainOptions {
@@ -16,8 +16,8 @@ class Main implements MainOptions {
     humidity: number;
     tempMin: number;
     tempMax: number;
-    seaLevel: number;
-    grndLevel: number;
+    seaLevel?: number;
+    grndLevel?: number;
 }
 
 function factory(rawData: MainOptions) {
