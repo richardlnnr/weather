@@ -24,6 +24,12 @@
       ],
       "@weather-lib/ngx-domain/*": [
         "dist/weather-lib/ngx-domain/*"
+      ],
+      "@weather-lib/ngx-api": [
+        "dist/weather-lib/ngx-api"
+      ],
+      "@weather-lib/ngx-api/*": [
+        "dist/weather-lib/ngx-api/*"
       ]
     }
   }
