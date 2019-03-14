@@ -1,7 +1,7 @@
 import { populate, arrayPopulate } from './base-functions';
 import {
     CoordOptions, WeatherOptions, MainOptions, WindOptions, CloudsOptions,
-    SysOptions, CoordFactory, WeatherFactory, MainFactory, WindFactory, CloudsFactory
+    SysOptions, CoordFactory, WeatherFactory, MainFactory, WindFactory, CloudsFactory, SysFactory
 } from './weather';
 
 export interface CurrentWeatherOptions {
@@ -44,6 +44,7 @@ function factory(rawData: CurrentWeatherOptions) {
     currentWeather.main = MainFactory(rawData.main);
     currentWeather.wind = WindFactory(rawData.wind);
     currentWeather.clouds = CloudsFactory(rawData.clouds);
+    currentWeather.sys = SysFactory(rawData.sys);
 
     return currentWeather;
 }

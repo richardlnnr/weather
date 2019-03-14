@@ -19,14 +19,14 @@ export class NgxCurrentWeatherService {
     ['tempMin', 'temp_min'],
     ['tempMax', 'temp_max']
   ];
-
-  private currentWeatherEndpoint = 'https://api.openweathermap.org/data/2.5/weather?q=Joinville,br&appid=ebc13b9317e3997e0f3d4fd53dfa1964';
-  url = `https://cors-anywhere.herokuapp.com/${this.currentWeatherEndpoint}`;
+  baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  apiKey = 'appid=ebc13b9317e3997e0f3d4fd53dfa1964';
 
   constructor(private http: HttpClient) { }
 
-  getCurrentWeather(): Observable<CurrentWeatherOptions> {
-    return this.http.get<CurrentWeatherApiModel>(this.url).pipe(
+  getCurrentWeather(city: string, country: string): Observable<CurrentWeatherOptions> {
+    const url = `${this.baseUrl}?q=${city},${country}&${this.apiKey}`;
+    return this.http.get<CurrentWeatherApiModel>(url).pipe(
       map((rawData) => {
         const newData: CurrentWeatherOptions = new CurrentWeather();
         newData.main = this.convertMain(rawData.main);

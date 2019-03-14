@@ -71,7 +71,7 @@ describe('NgxCurrentWeatherService', () => {
       cod: 200
     };
 
-    currentWeatherService.getCurrentWeather().subscribe(
+    currentWeatherService.getCurrentWeather('London', 'GB').subscribe(
       (weather) => {
         expect(weather.id).toEqual(mockCurretWeather.id);
         expect(weather instanceof CurrentWeather).toBeTruthy();
@@ -79,7 +79,8 @@ describe('NgxCurrentWeatherService', () => {
       fail
     );
 
-    const req = httpTestingController.expectOne(currentWeatherService.url);
+    const url = `${currentWeatherService.baseUrl}?q=London,GB&${currentWeatherService.apiKey}`;
+    const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
 
     // Respond with the mock heroes
