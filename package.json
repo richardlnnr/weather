@@ -3,11 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "./node_modules/.bin/ng serve",
+    "build": "npm run build:ngx-domain && npm run build:ngx-api",
+    "build:ngx-domain": "./node_modules/.bin/ng build @weather-lib/ngx-domain",
+    "build:ngx-api": "./node_modules/.bin/ng build @weather-lib/ngx-api",
+    "test": "./node_modules/.bin/ng test",
+    "test:circle-ci": "./node_modules/.bin/ng test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --code-coverage",
+    "lint": "./node_modules/.bin/ng lint",
+    "e2e": "./node_modules/.bin/ng e2e"
   },
   "private": true,
   "dependencies": {
