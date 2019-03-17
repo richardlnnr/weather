@@ -7,28 +7,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WeatherComponent implements OnInit {
 
-  weatherCards;
+  weatherCards = [
+    {
+      city: 'Nuuk',
+      country: 'GL',
+      displayMoreInformation: false
+    },
+    {
+      city: 'Urubici',
+      country: 'BR',
+      displayMoreInformation: true
+    },
+    {
+      city: 'Nairobi',
+      country: 'KE',
+      displayMoreInformation: false
+    }
+  ];
 
   constructor() { }
 
   ngOnInit() {
-    this.weatherCards = [
-      {
-        city: 'Nuuk',
-        country: 'GL',
-        displayMoreInformation: false
-      },
-      {
-        city: 'Urubici',
-        country: 'BR',
-        displayMoreInformation: true
-      },
-      {
-        city: 'Nairobi',
-        country: 'KE',
-        displayMoreInformation: false
-      }
-    ];
+    // this.weatherCards = [
+    //   {
+    //     city: 'Nuuk',
+    //     country: 'GL',
+    //     displayMoreInformation: false
+    //   },
+    //   {
+    //     city: 'Urubici',
+    //     country: 'BR',
+    //     displayMoreInformation: true
+    //   },
+    //   {
+    //     city: 'Nairobi',
+    //     country: 'KE',
+    //     displayMoreInformation: false
+    //   }
+    // ];
   }
 
 }

@@ -75,6 +75,7 @@ describe('WeatherComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WeatherComponent);
     component = fixture.componentInstance;
+    component.weatherCards = [];
     fixture.detectChanges();
   });
 
