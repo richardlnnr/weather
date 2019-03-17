@@ -1,9 +1,31 @@
-<div *ngIf="(currentWeather$ | async) as currentWeather; else loading">
-  <div>{{currentWeather.name}}, {{currentWeather.sys.country}}</div>
-  <div>{{currentWeather.main.temp}}</div>
-  <div>{{currentWeather.main.pressure}}</div>
-  <div>{{currentWeather.main.humidity}}</div>
+<div class="card elevation">
+  <div class="header">
+    <div class="title text-primary">
+        {{city}}, {{country}}
+    </div>
+  </div>
+  <div class="divider"></div>
+  <ng-container *ngIf="(currentWeather$ | async) as currentWeather; else loading">
+    <div class="content">
+      <p class="temp" [ngClass]="getColorText(currentWeather.main.temp)">{{getConvertedTemperature(currentWeather.main.temp)}}<span class="degree">º</span></p>
+    </div>
+    <div class="footer">
+      <div class="main-information" *ngIf="displayMoreInformation">
+        <div class="slot">
+          <span class="text-secondary">HUMIDITY</span>
+          <span class="text-primary">{{currentWeather.main.humidity}}<span class="measure">%</span></span>
+        </div>
+        <div class="slot">
+          <span class="text-secondary">PRESSURE</span>
+          <span class="text-primary">{{getRoundPressure(currentWeather.main.pressure)}}<span class="measure">hPa</span></span>
+        </div>
+      </div>
+      <div class="updated-date text-secondary">Updated at {{currentWeather.updatedDate | date: 'mediumTime'}}</div>
+    </div>
+  </ng-container>
 </div>
 <ng-template #loading>
-  Loading stuff...
+  <div class="content">
+    Loading stuff...
+  </div>
 </ng-template>

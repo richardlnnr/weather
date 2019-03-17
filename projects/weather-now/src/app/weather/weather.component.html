@@ -1,0 +1,5 @@
+<div class="card-container">
+  <ng-container *ngFor="let weather of weatherCards">
+    <app-weather-card [city]="weather.city" [country]="weather.country" [displayMoreInformation]="weather.displayMoreInformation"></app-weather-card>
+  </ng-container>
+</div>

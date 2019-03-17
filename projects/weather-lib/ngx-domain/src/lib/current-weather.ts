@@ -1,4 +1,4 @@
-import { populate, arrayPopulate } from './base-functions';
+import { arrayPopulate } from './base-functions';
 import {
     CoordOptions, WeatherOptions, MainOptions, WindOptions, CloudsOptions,
     SysOptions, CoordFactory, WeatherFactory, MainFactory, WindFactory, CloudsFactory, SysFactory
@@ -17,6 +17,7 @@ export interface CurrentWeatherOptions {
     clouds: CloudsOptions;
     dt: number;
     sys: SysOptions;
+    updatedDate: Date;
 }
 
 class CurrentWeather implements CurrentWeatherOptions {
@@ -32,13 +33,20 @@ class CurrentWeather implements CurrentWeatherOptions {
     clouds: CloudsOptions;
     dt: number;
     sys: SysOptions;
+    updatedDate: Date;
 }
 
 function factory(rawData: CurrentWeatherOptions) {
 
     const currentWeather = new CurrentWeather();
 
-    populate(['id', 'name', 'cod', 'base', 'visibility', 'dt'], rawData, currentWeather);
+    currentWeather.id = rawData.id;
+    currentWeather.name = rawData.name;
+    currentWeather.cod = rawData.cod;
+    currentWeather.base = rawData.base;
+    currentWeather.visibility = rawData.visibility;
+    currentWeather.dt = rawData.dt;
+    currentWeather.updatedDate = rawData.updatedDate;
     currentWeather.coord = CoordFactory(rawData.coord);
     currentWeather.weather = arrayPopulate('weather', rawData, WeatherFactory);
     currentWeather.main = MainFactory(rawData.main);

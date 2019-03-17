@@ -1,14 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WeatherCardComponent } from './weather-card.component';
+import { WeatherComponent } from './weather.component';
+import { WeatherCardComponent } from '../weather-card/weather-card.component';
 import { HttpClientModule } from '@angular/common/http';
-import { NgxCurrentWeatherService } from '@weather-lib/ngx-api';
-import { of, Observable } from 'rxjs';
 import { CurrentWeatherOptions } from '@weather-lib/ngx-domain';
+import { of } from 'rxjs';
+import { NgxCurrentWeatherService } from '@weather-lib/ngx-api';
 
-describe('WeatherCardComponent', () => {
-  let component: WeatherCardComponent;
-  let fixture: ComponentFixture<WeatherCardComponent>;
+describe('WeatherComponent', () => {
+  let component: WeatherComponent;
+  let fixture: ComponentFixture<WeatherComponent>;
   let getCurrentWeatherSpy: any;
 
   beforeEach(async(() => {
@@ -57,10 +58,10 @@ describe('WeatherCardComponent', () => {
     };
 
     const currentWeatherService = jasmine.createSpyObj('NgxCurrentWeatherService', ['getCurrentWeather']);
-    getCurrentWeatherSpy = currentWeatherService.getCurrentWeather.and.returnValue( of(weaterMock) );
+    getCurrentWeatherSpy = currentWeatherService.getCurrentWeather.and.returnValue(of(weaterMock));
 
     TestBed.configureTestingModule({
-      declarations: [ WeatherCardComponent ],
+      declarations: [ WeatherComponent, WeatherCardComponent ],
       imports: [
         HttpClientModule
       ],
@@ -72,26 +73,13 @@ describe('WeatherCardComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WeatherCardComponent);
+    fixture = TestBed.createComponent(WeatherComponent);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
+    component.weatherCards = [];
+    fixture.detectChanges();
   });
 
   it('should create', () => {
-    fixture.detectChanges();
     expect(component).toBeTruthy();
-
-    expect(getCurrentWeatherSpy.calls.any()).toBe(true);
-  });
-
-  it('should render city and contry title in a .card.header.title class', () => {
-    component.city = 'Joinville';
-    component.country = 'BR';
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    const card = compiled.querySelector('.card');
-    const header = card.querySelector('.header');
-    const title = header.querySelector('.title');
-    expect(title.textContent).toContain('Joinville, BR');
   });
 });
