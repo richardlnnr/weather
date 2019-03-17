@@ -52,9 +52,9 @@ describe('WeatherCardComponent', () => {
       },
       id: 2643743,
       name: 'London',
-      cod: 200
+      cod: 200,
+      updatedDate: new Date(2019, 3, 16, 15, 52, 30)
     };
-
 
     const currentWeatherService = jasmine.createSpyObj('NgxCurrentWeatherService', ['getCurrentWeather']);
     getCurrentWeatherSpy = currentWeatherService.getCurrentWeather.and.returnValue( of(weaterMock) );
@@ -74,12 +74,24 @@ describe('WeatherCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WeatherCardComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {
+    fixture.detectChanges();
     expect(component).toBeTruthy();
 
     expect(getCurrentWeatherSpy.calls.any()).toBe(true);
+  });
+
+  it('should render city and contry title in a .card.header.title class', () => {
+    component.city = 'Joinville';
+    component.country = 'BR';
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    const card = compiled.querySelector('.card');
+    const header = card.querySelector('.header');
+    const title = header.querySelector('.title');
+    expect(title.textContent).toContain('Joinville, BR');
   });
 });

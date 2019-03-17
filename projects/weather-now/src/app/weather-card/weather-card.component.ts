@@ -17,6 +17,9 @@ export class WeatherCardComponent implements OnInit {
   @Input()
   country: string;
 
+  @Input()
+  displayMoreInformation: boolean;
+
   currentWeather$: Observable<CurrentWeatherOptions>;
 
   constructor(private currentWeatherService: NgxCurrentWeatherService) { }

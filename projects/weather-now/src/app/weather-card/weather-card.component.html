@@ -1,9 +1,25 @@
-<div *ngIf="(currentWeather$ | async) as currentWeather; else loading">
-  <div>{{currentWeather.name}}, {{currentWeather.sys.country}}</div>
-  <div>{{currentWeather.main.temp}}</div>
-  <div>{{currentWeather.main.pressure}}</div>
-  <div>{{currentWeather.main.humidity}}</div>
+<div class="card elevation">
+  <div class="header">
+    <div class="title">
+        {{city}}, {{country}}
+    </div>
+  </div>
+  <div class="divider"></div>
+  <ng-container *ngIf="(currentWeather$ | async) as currentWeather; else loading">
+    <div class="body">
+      <p>{{currentWeather.main.temp}}</p>
+    </div>
+    <div class="actions">
+      <ng-container *ngIf="displayMoreInformation">
+        <span>{{currentWeather.main.pressure}}</span>
+        <span>{{currentWeather.main.humidity}}</span>
+      </ng-container>
+      <p>Updated at {{currentWeather.updatedDate | date: 'mediumTime'}}</p>
+    </div>
+  </ng-container>
 </div>
 <ng-template #loading>
-  Loading stuff...
+  <div class="body">
+    Loading stuff...
+  </div>
 </ng-template>
