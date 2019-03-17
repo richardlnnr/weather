@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { WeatherCardComponent } from './weather-card/weather-card.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MenuComponent } from './menu/menu.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -13,6 +14,7 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
+        MenuComponent,
         WeatherCardComponent
       ],
     }).compileComponents();
