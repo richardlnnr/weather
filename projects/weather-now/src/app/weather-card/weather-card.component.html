@@ -1,25 +1,31 @@
 <div class="card elevation">
   <div class="header">
-    <div class="title">
+    <div class="title text-primary">
         {{city}}, {{country}}
     </div>
   </div>
   <div class="divider"></div>
   <ng-container *ngIf="(currentWeather$ | async) as currentWeather; else loading">
-    <div class="body">
-      <p>{{currentWeather.main.temp}}</p>
+    <div class="content">
+      <p class="temp" [ngClass]="getColorText(currentWeather.main.temp)">{{getConvertedTemperature(currentWeather.main.temp)}}º</p>
     </div>
     <div class="footer">
-      <ng-container *ngIf="displayMoreInformation">
-        <span>{{currentWeather.main.pressure}}</span>
-        <span>{{currentWeather.main.humidity}}</span>
-      </ng-container>
-      <p>Updated at {{currentWeather.updatedDate | date: 'mediumTime'}}</p>
+      <div class="main-information" *ngIf="displayMoreInformation">
+        <div class="slot">
+          <span class="text-secondary">HUMIDITY</span>
+          <span class="text-primary">{{currentWeather.main.humidity}}%</span>
+        </div>
+        <div class="slot">
+          <span class="text-secondary">PRESSURE</span>
+          <span class="text-primary">{{currentWeather.main.pressure}}hPa</span>
+        </div>
+      </div>
+      <div class="updated-date text-secondary">Updated at {{currentWeather.updatedDate | date: 'mediumTime'}}</div>
     </div>
   </ng-container>
 </div>
 <ng-template #loading>
-  <div class="body">
+  <div class="content">
     Loading stuff...
   </div>
 </ng-template>
