@@ -23,7 +23,7 @@
             "polyfills": "projects/weather-now/src/polyfills.ts",
             "tsConfig": "projects/weather-now/tsconfig.app.json",
             "assets": [
-              "projects/weather-now/src/favicon.ico",
+              "projects/weather-now/src/favicon.png",
               "projects/weather-now/src/assets"
             ],
             "styles": [
