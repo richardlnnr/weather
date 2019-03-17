@@ -58,4 +58,8 @@ export class WeatherCardComponent implements OnInit {
     return Math.round(formatedTemperature);
   }
 
+  getRoundPressure(pressure: number): number {
+    return Math.round(pressure);
+  }
+
 }
