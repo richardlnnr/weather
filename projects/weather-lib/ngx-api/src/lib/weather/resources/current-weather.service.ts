@@ -29,12 +29,18 @@ export class NgxCurrentWeatherService {
     return this.http.get<CurrentWeatherApiModel>(url).pipe(
       map((rawData) => {
         const newData: CurrentWeatherOptions = new CurrentWeather();
+
         newData.main = this.convertMain(rawData.main);
+
         populate(
           [
             'id', 'name', 'cod', 'coord', 'weather', 'base',
             'visibility', 'wind', 'clouds', 'dt', 'sys'
-          ], rawData, newData);
+          ], rawData, newData
+        );
+
+        newData.updatedDate = new Date();
+
         return newData;
       })
     );
