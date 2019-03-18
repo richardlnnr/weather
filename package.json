@@ -4,8 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "./node_modules/.bin/ng serve --prod",
-    "initial-build": "npm i && npm run build",
-    "build": "npm run build:ngx-domain && npm run build:ngx-api",
+    "initial-build": "npm i && npm run build:libs",
+    "build:project": "npm run build:libs && npm run build:app",
+    "build:app": "./node_modules/.bin/ng build weather-now",
+    "build:libs": "npm run build:ngx-domain && npm run build:ngx-api",
     "build:ngx-domain": "./node_modules/.bin/ng build @weather-lib/ngx-domain",
     "build:ngx-api": "./node_modules/.bin/ng build @weather-lib/ngx-api",
     "test": "./node_modules/.bin/ng test",
