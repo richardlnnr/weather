@@ -24,6 +24,11 @@
     & > .content {
         text-align: center;
 
+        &.loading {
+            padding-bottom: 60px;
+            padding-top: 60px;
+        }
+
         & > .temp {
             margin: 20px;
             font-size: 82px;
