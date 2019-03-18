@@ -25,7 +25,8 @@ export class WeatherCardComponent implements OnInit {
   constructor(private currentWeatherService: NgxCurrentWeatherService) { }
 
   ngOnInit() {
-    const seconds = interval(600000);
+    // const seconds = interval(600000);
+    const seconds = interval(10000);
 
     seconds.pipe(
       timeInterval(),
