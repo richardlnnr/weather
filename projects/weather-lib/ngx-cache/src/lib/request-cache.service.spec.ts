@@ -3,7 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { RequestCacheWithMap } from './request-cache.service';
 
 describe('RequestCacheService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [
+      RequestCacheWithMap
+    ]
+  }));
 
   it('should be created', () => {
     const service: RequestCacheWithMap = TestBed.get(RequestCacheWithMap);
