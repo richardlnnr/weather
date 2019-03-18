@@ -3,6 +3,7 @@ import { NgxCurrentWeatherService } from './current-weather.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CurrentWeatherApiModel } from '../model/current-weather.api.model';
 import { CurrentWeather } from '@weather-lib/ngx-domain';
+import { NgxApiModule } from '../../ngx-api.module';
 
 describe('NgxCurrentWeatherService', () => {
   let httpTestingController: HttpTestingController;
@@ -10,7 +11,9 @@ describe('NgxCurrentWeatherService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule ],
+      imports: [ HttpClientTestingModule, NgxApiModule.forRoot({
+        weatherNowApiKey: 'testApiKey'
+      }) ],
       providers: [ NgxCurrentWeatherService ]
     });
 
@@ -79,7 +82,7 @@ describe('NgxCurrentWeatherService', () => {
       fail
     );
 
-    const url = `${currentWeatherService.baseUrl}?q=London,GB&${currentWeatherService.apiKey}`;
+    const url = `${currentWeatherService.baseUrl}?q=London,GB&appid=testApiKey}`;
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
 
