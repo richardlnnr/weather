@@ -82,7 +82,8 @@ describe('NgxCurrentWeatherService', () => {
       fail
     );
 
-    const url = `${currentWeatherService.baseUrl}?q=London,GB&appid=testApiKey}`;
+    // https://api.openweathermap.org/data/2.5/weather?q=London,GB&appid=testApiKey
+    const url = `${currentWeatherService.baseUrl}?q=London,GB&appid=testApiKey`;
     const req = httpTestingController.expectOne(url);
     expect(req.request.method).toEqual('GET');
 
