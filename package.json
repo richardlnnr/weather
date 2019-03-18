@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "./node_modules/.bin/ng serve",
+    "initial-build": "npm i && npm run build",
     "build": "npm run build:ngx-domain && npm run build:ngx-api",
     "build:ngx-domain": "./node_modules/.bin/ng build @weather-lib/ngx-domain",
     "build:ngx-api": "./node_modules/.bin/ng build @weather-lib/ngx-api",
