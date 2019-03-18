@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {
@@ -6,6 +6,7 @@ import {
 } from '@weather-lib/ngx-domain';
 import { map } from 'rxjs/operators';
 import { CurrentWeatherApiModel, MainApiModel } from '../model';
+import { NGX_API_OPTIONS, NgxApiModuleOptions } from '../../ngx-api.options';
 
 @Injectable({
   providedIn: 'root'
@@ -20,12 +21,14 @@ export class NgxCurrentWeatherService {
     ['tempMax', 'temp_max']
   ];
   baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
-  apiKey = 'appid=ebc13b9317e3997e0f3d4fd53dfa1964';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(NGX_API_OPTIONS) private config: NgxApiModuleOptions
+  ) { }
 
   getCurrentWeather(city: string, country: string): Observable<CurrentWeatherOptions> {
-    const url = `${this.baseUrl}?q=${city},${country}&${this.apiKey}`;
+    const url = `${this.baseUrl}?q=${city},${country}&appid=${this.config.weatherNowApiKey}`;
     return this.http.get<CurrentWeatherApiModel>(url).pipe(
       map((rawData) => {
         const newData: CurrentWeatherOptions = new CurrentWeather();

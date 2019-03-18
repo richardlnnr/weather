@@ -30,6 +30,12 @@
       ],
       "@weather-lib/ngx-api/*": [
         "dist/weather-lib/ngx-api/*"
+      ],
+      "@weather-lib/ngx-cache": [
+        "dist/weather-lib/ngx-cache"
+      ],
+      "@weather-lib/ngx-cache/*": [
+        "dist/weather-lib/ngx-cache/*"
       ]
     }
   }
