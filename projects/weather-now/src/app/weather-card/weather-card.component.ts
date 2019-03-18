@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgxCurrentWeatherService } from '@weather-lib/ngx-api';
 import { CurrentWeatherOptions, CurrentWeatherFactory } from '@weather-lib/ngx-domain';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, startWith, timeInterval } from 'rxjs/operators';
+import { Observable, interval } from 'rxjs';
 
 @Component({
   selector: 'app-weather-card',
@@ -25,13 +25,20 @@ export class WeatherCardComponent implements OnInit {
   constructor(private currentWeatherService: NgxCurrentWeatherService) { }
 
   ngOnInit() {
-    this.currentWeather$ = this.currentWeatherService
+    const seconds = interval(600000);
+
+    seconds.pipe(
+      timeInterval(),
+      startWith(0)
+    ).subscribe(() => {
+      this.currentWeather$ = this.currentWeatherService
       .getCurrentWeather(this.city, this.country)
       .pipe(
         map((weather: CurrentWeatherOptions) => {
           return CurrentWeatherFactory(weather);
         })
       );
+    });
   }
 
   getColorText(temperature: number): string {

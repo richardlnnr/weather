@@ -6,6 +6,12 @@ html, body {
     font-family: Helvetica, Arial;
 }
 
+@media only screen and (max-width: 768px) {
+    html, body {
+        padding-top: 95px;
+    }
+}
+
 $primary-text-color: #737C84;
 $secondary-text-color: #B4B4B4;
 $red-text-color: #ED1946;
