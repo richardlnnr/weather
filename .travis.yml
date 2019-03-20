@@ -11,6 +11,8 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
+  sonarcloud:
+    organization: "richardlnnr-github"
 
 cache:
   directories:
@@ -22,3 +24,4 @@ install:
 script:
   - npm run build:libs
   - npm run test:circle-ci
+  - sonar-scanner
