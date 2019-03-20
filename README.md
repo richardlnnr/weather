@@ -1,6 +1,7 @@
-[![CircleCI](https://circleci.com/gh/richardlnnr/weather.svg?style=shield)](https://circleci.com/gh/richardlnnr/weather)
-
 # Weather
+
+[![CircleCI](https://circleci.com/gh/richardlnnr/weather.svg?style=shield)](https://circleci.com/gh/richardlnnr/weather)
+[![Build Status](https://travis-ci.org/richardlnnr/weather.svg?branch=master)](https://travis-ci.org/richardlnnr/weather)
 
 This project was created to test [OpenWeatherMap](https://openweathermap.org/).
 
