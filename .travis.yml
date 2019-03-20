@@ -1,0 +1,27 @@
+dist: trusty
+sudo: false
+
+language: node_js
+node_js:
+  - "10"
+  
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+  sonarcloud:
+    organization: "richardlnnr-github"
+
+cache:
+  directories:
+     - ./node_modules
+
+install:
+  - npm install
+
+script:
+  - npm run build:libs
+  - npm run test:circle-ci
+  - sonar-scanner
