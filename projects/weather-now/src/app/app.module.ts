@@ -30,7 +30,6 @@ const apiOptions: NgxApiModuleOptions = {
     NgxCacheModule
   ],
   providers: [
-    NgxCurrentWeatherService
   ],
   bootstrap: [AppComponent]
 })
