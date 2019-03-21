@@ -4,17 +4,16 @@ import { RequestCacheEntryOptions, RequestCacheEntryFactory } from './request-ca
 import { RequestCache } from './request-cache';
 
 
-const LOCAL_STORAGE_KEY = 'CacheMap';
-const maxAge = 590000; // maximum cache age (ms)
-
 @Injectable()
 export class RequestCacheWithMap implements RequestCache {
 
+  readonly LOCAL_STORAGE_KEY = 'CacheMap';
+  readonly maxAge = 590000; // maximum cache age (ms)
   cache = this.getStorageCache();
 
   private getStorageCache(): Map<string, RequestCacheEntryOptions> {
     const cacheMap = new Map<string, RequestCacheEntryOptions>();
-    const cacheString = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const cacheString = localStorage.getItem(this.LOCAL_STORAGE_KEY);
     if (cacheString) {
       const partialMap = new Map<string, RequestCacheEntryOptions>(JSON.parse(cacheString));
       partialMap.forEach((cacheEntry, key) => {
@@ -27,7 +26,7 @@ export class RequestCacheWithMap implements RequestCache {
 
   private setStorageCache(cacheMap: Map<string, RequestCacheEntryOptions>) {
     const cacheString = JSON.stringify(Array.from(cacheMap.entries()));
-    localStorage.setItem(LOCAL_STORAGE_KEY, cacheString);
+    localStorage.setItem(this.LOCAL_STORAGE_KEY, cacheString);
   }
 
   constructor() { }
@@ -40,7 +39,7 @@ export class RequestCacheWithMap implements RequestCache {
       return undefined;
     }
 
-    const isExpired = cached.lastRead < (Date.now() - maxAge);
+    const isExpired = cached.lastRead < (Date.now() - this.maxAge);
     return isExpired ? undefined : cached.response;
   }
 
@@ -51,7 +50,7 @@ export class RequestCacheWithMap implements RequestCache {
     this.cache.set(url, entry);
 
     // remove expired cache entries
-    const expired = Date.now() - maxAge;
+    const expired = Date.now() - this.maxAge;
     this.cache.forEach(cacheEntry => {
       if (cacheEntry.lastRead < expired) {
         this.cache.delete(cacheEntry.url);
