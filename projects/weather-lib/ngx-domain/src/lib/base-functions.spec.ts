@@ -1,4 +1,5 @@
-import { remap } from './base-functions';
+import { remap, populate } from './base-functions';
+
 
 interface RemapCodeOptions {
     temp_max: number;
@@ -9,45 +10,69 @@ class RemapCode {
 }
 
 describe('Class: base-functions', () => {
+    let remapedClass: RemapCode;
+    let cloudMock: RemapCodeOptions;
+    let remapProps: Array<[string, string]>;
 
-    describe('remap function', () => {
-        const cloudMock: RemapCodeOptions = {
+    beforeEach(() => {
+        remapedClass = new RemapCode();
+        cloudMock = {
             temp_max: 5
         };
+        remapProps = [
+            ['tempMax', 'temp_max']
+        ];
+    });
 
-        let instanceClass: RemapCode;
+    afterEach(() => {
+        remapedClass = null;
+    });
 
-        beforeEach(() => {
-            instanceClass = new RemapCode();
-        });
-
-        afterEach(() => {
-            instanceClass = null;
-        });
+    describe('remap function', () => {
 
         it('should remap the properties of an interface into an object', () => {
-            const remapProps: Array<[string, string]> = [
-                ['tempMax', 'temp_max']
-            ];
-            remap(remapProps, cloudMock, instanceClass);
-            expect(instanceClass.tempMax).toEqual(5);
+            remap(remapProps, cloudMock, remapedClass);
+            expect(remapedClass.tempMax).toEqual(5);
         });
 
         it('should remap the properties of an interface into an object with extra wrong properties', () => {
-            const remapProps: Array<[string, string]> = [
-                ['tempMin', 'temp_min'],
-                ['tempMax', 'temp_max']
-            ];
-            remap(remapProps, cloudMock, instanceClass);
-            expect(instanceClass.tempMax).toEqual(5);
+            remapProps.push(['tempMin', 'temp_min']);
+            remap(remapProps, cloudMock, remapedClass);
+            expect(remapedClass.tempMax).toEqual(5);
         });
 
         it('should remap a null rawData object', () => {
-            const remapProps: Array<[string, string]> = [
-                ['tempMax', 'temp_max']
-            ];
-            remap(remapProps, null, instanceClass);
-            expect(instanceClass.tempMax).toBeUndefined();
+            remap(remapProps, null, remapedClass);
+            expect(remapedClass.tempMax).toBeUndefined();
+        });
+    });
+
+    describe('populate function', () => {
+
+        let populatedClass: RemapCode;
+
+        beforeEach(() => {
+            populatedClass = new RemapCode();
+            remap(remapProps, cloudMock, remapedClass);
+        });
+
+        afterEach(() => {
+            populatedClass = null;
+        });
+
+        it('should populate the properties from an object into a new object', () => {
+            populate(['tempMax'], remapedClass, populatedClass);
+            expect(populatedClass.tempMax).toEqual(5);
+        });
+
+        it('should populate the properties from an object into a new object with extra wrong properties', () => {
+            populate(['tempMax', 'tempMin'], remapedClass, populatedClass);
+            expect(populatedClass.tempMax).toEqual(5);
+        });
+
+        it('should populate a null rawData object', () => {
+            populate(['tempMax'], null, populatedClass);
+            expect(populatedClass.tempMax).toBeUndefined();
         });
     });
 });
