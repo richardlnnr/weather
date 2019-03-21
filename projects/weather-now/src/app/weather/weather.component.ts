@@ -28,23 +28,6 @@ export class WeatherComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // this.weatherCards = [
-    //   {
-    //     city: 'Nuuk',
-    //     country: 'GL',
-    //     displayMoreInformation: false
-    //   },
-    //   {
-    //     city: 'Urubici',
-    //     country: 'BR',
-    //     displayMoreInformation: true
-    //   },
-    //   {
-    //     city: 'Nairobi',
-    //     country: 'KE',
-    //     displayMoreInformation: false
-    //   }
-    // ];
   }
 
 }
