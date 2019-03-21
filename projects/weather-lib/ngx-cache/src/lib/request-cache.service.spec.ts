@@ -4,7 +4,7 @@ import { RequestCacheWithMap } from './request-cache.service';
 import { NgxCacheModule } from './ngx-cache.module';
 import { RequestCache } from './request-cache';
 import { HttpRequest, HttpResponse } from '@angular/common/http';
-import { RequestCacheEntryOptions } from './request-cache-entry';
+import { RequestCacheEntryOptions, RequestCacheEntryFactory } from './request-cache-entry';
 
 describe('RequestCacheService', () => {
   let service: RequestCacheWithMap;
@@ -22,8 +22,8 @@ describe('RequestCacheService', () => {
     httpRequestNuuk = {
       method: 'GET',
       responseType: 'json',
-      url: 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=ebc13b9317e3997e0f3d4fd53dfa1964',
-      urlWithParams: 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=ebc13b9317e3997e0f3d4fd53dfa1964',
+      url: 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=testKey',
+      urlWithParams: 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=testKey',
       withCredentials: false,
       body: null,
       serializeBody: null,
@@ -35,13 +35,13 @@ describe('RequestCacheService', () => {
     };
 
     httpResponseNuuk = {
-      url: 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=ebc13b9317e3997e0f3d4fd53dfa1964',
+      url: 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=testKey',
       response: {
         headers: null,
         clone: null,
         status: 200,
         statusText: 'OK',
-        url: 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=ebc13b9317e3997e0f3d4fd53dfa1964',
+        url: 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=testKey',
         ok: true,
         type: 4,
         body: {
@@ -110,7 +110,7 @@ describe('RequestCacheService', () => {
     httpResponseNuuk.lastRead = (Date.now() - (service.maxAge + 2000));
 
     cacheMap.set(
-      'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=ebc13b9317e3997e0f3d4fd53dfa1964',
+      'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=testKey',
       httpResponseNuuk
     );
 
@@ -127,7 +127,7 @@ describe('RequestCacheService', () => {
     httpResponseNuuk.lastRead = Date.now();
 
     cacheMap.set(
-      'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=ebc13b9317e3997e0f3d4fd53dfa1964',
+      'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=testKey',
       httpResponseNuuk
     );
 
@@ -138,5 +138,68 @@ describe('RequestCacheService', () => {
     const response = service.get(httpRequestNuuk);
     expect(response instanceof HttpResponse).toBeTruthy();
     expect(response).toEqual(new HttpResponse<any>(httpResponseNuuk.response));
+  });
+
+  it('should store a response to the cached', () => {
+    const requestKey = 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=testKey';
+    const dateBeforeNow = Date.now();
+
+    service = TestBed.get(RequestCache);
+    service.put(
+      httpRequestNuuk,
+      new HttpResponse<any>(httpResponseNuuk.response)
+    );
+
+    const cacheString = localStorage.getItem(service.LOCAL_STORAGE_KEY);
+    const cacheMap = new Map<string, RequestCacheEntryOptions>(JSON.parse(cacheString));
+
+    expect(cacheMap.has(requestKey)).toBeTruthy();
+    expect(cacheMap.size).toEqual(1);
+
+    const requestCacheEntity: RequestCacheEntryOptions = RequestCacheEntryFactory(cacheMap.get(requestKey));
+
+    expect(requestCacheEntity).toBeDefined();
+    expect(requestCacheEntity.lastRead).toBeGreaterThanOrEqual(dateBeforeNow);
+    expect(requestCacheEntity.lastRead).toBeLessThanOrEqual(Date.now());
+    expect(requestCacheEntity.response.body).toEqual(httpResponseNuuk.response.body);
+    expect(requestCacheEntity.response.url).toEqual(httpResponseNuuk.response.url);
+  });
+
+  it('should remove an expired cache when are storing a new response to the cached', () => {
+    const expiredCacheMap = new  Map<string, RequestCacheEntryOptions>();
+    httpResponseNuuk.lastRead = (Date.now() - (service.maxAge + 2000));
+    const expiredResponse = { ...httpResponseNuuk};
+    expiredResponse.url = 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL';
+    expiredCacheMap.set(
+      'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL',
+      expiredResponse
+    );
+
+    const expiredCacheString = JSON.stringify(Array.from(expiredCacheMap.entries()));
+
+    localStorage.setItem(service.LOCAL_STORAGE_KEY, expiredCacheString);
+
+    const requestKey = 'https://api.openweathermap.org/data/2.5/weather?q=Nuuk,GL&appid=testKey';
+    const dateBeforeNow = Date.now();
+
+    service = TestBed.get(RequestCache);
+    service.put(
+      httpRequestNuuk,
+      new HttpResponse<any>(httpResponseNuuk.response)
+    );
+
+    const cacheString = localStorage.getItem(service.LOCAL_STORAGE_KEY);
+    const cacheMap = new Map<string, RequestCacheEntryOptions>(JSON.parse(cacheString));
+
+    expect(cacheMap.has(requestKey)).toBeTruthy();
+    expect(cacheMap.size).toEqual(1);
+
+    const requestCacheEntity: RequestCacheEntryOptions = RequestCacheEntryFactory(cacheMap.get(requestKey));
+
+    expect(requestCacheEntity).toBeDefined();
+    expect(requestCacheEntity.lastRead).toBeGreaterThanOrEqual(dateBeforeNow);
+    expect(requestCacheEntity.lastRead).toBeLessThanOrEqual(Date.now());
+    expect(requestCacheEntity.response.body).toEqual(httpResponseNuuk.response.body);
+    expect(requestCacheEntity.response.url).toEqual(httpResponseNuuk.response.url);
   });
 });
