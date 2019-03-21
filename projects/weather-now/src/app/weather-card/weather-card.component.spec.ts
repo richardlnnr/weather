@@ -94,4 +94,24 @@ describe('WeatherCardComponent', () => {
     const title = header.querySelector('.title');
     expect(title.textContent).toContain('Joinville, BR');
   });
+
+  it('should return a blue color with 50 Kelvin', () => {
+    expect(component.getColorText(50)).toEqual('text-blue');
+  });
+
+  it('should return a orange color with 280 Kelvin', () => {
+    expect(component.getColorText(280)).toEqual('text-orange');
+  });
+
+  it('should return a red color with 350 Kelvin', () => {
+    expect(component.getColorText(350)).toEqual('text-red');
+  });
+
+  it('should convert 315,15 Kelvin to 42 Celsius', () => {
+    expect(component.getConvertedTemperature(315.15)).toEqual(42);
+  });
+
+  it('should return a rounded pressure 260.4 to 260 Kevin', () => {
+    expect(component.getRoundPressure(260.4)).toEqual(260);
+  });
 });
