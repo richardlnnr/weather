@@ -24,7 +24,8 @@
             "tsConfig": "projects/weather-now/tsconfig.app.json",
             "assets": [
               "projects/weather-now/src/favicon.png",
-              "projects/weather-now/src/assets"
+              "projects/weather-now/src/assets",
+              "projects/weather-now/src/manifest.json"
             ],
             "styles": [
               "projects/weather-now/src/styles.scss"
@@ -55,7 +56,9 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "projects/weather-now/ngsw-config.json"
             }
           }
         },
@@ -89,7 +92,8 @@
             "scripts": [],
             "assets": [
               "projects/weather-now/src/favicon.ico",
-              "projects/weather-now/src/assets"
+              "projects/weather-now/src/assets",
+              "projects/weather-now/src/manifest.json"
             ]
           }
         },
