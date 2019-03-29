@@ -10,6 +10,7 @@ import { WeatherComponent } from './weather/weather.component';
 import { MenuComponent } from './menu/menu.component';
 import { NgxCacheModule } from '@weather-lib/ngx-cache';
 import { environment } from '../environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 const apiOptions: NgxApiModuleOptions = {
   weatherNowApiKey: environment.weatherNowApiKey
@@ -27,7 +28,8 @@ const apiOptions: NgxApiModuleOptions = {
     AppRoutingModule,
     HttpClientModule,
     NgxApiModule.forRoot(apiOptions),
-    NgxCacheModule
+    NgxCacheModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
   ],
